@@ -26,16 +26,16 @@ def call(Map config = [:]) {
         // Update deployment manifests with new image tags - using proper Linux sed syntax
         sh """
             # Update main application deployment - note the correct image name is trainwithshubham/easyshop-app
-            sed -i "s|image: sandyswosti/easyshop-app:.*|image: sandyswosti/easyshop-app:${imageTag}|g" https://github.com/sananddev/tws-e-commerce-app/blob/master/kubernetes/08-easyshop-deployment.yaml
+            sed -i "s|image: sandyswosti/easyshop-app:.*|image: sandyswosti/easyshop-app:${imageTag}|g"  kubernetes/08-easyshop-deployment.yaml
             
             # Update migration job if it exists
             if [ -f "${manifestsPath}/12-migration-job.yaml" ]; then
-                sed -i "s|image: sandyswosti/easyshop-migration:.*|image: sandyswosti/easyshop-migration:${imageTag}|g" https://github.com/sananddev/tws-e-commerce-app/blob/master/kubernetes/12-migration-job.yaml
+                sed -i "s|image: sandyswosti/easyshop-migration:.*|image: sandyswosti/easyshop-migration:${imageTag}|g"   kubernetes/12-migration-job.yaml
             fi
             
             # Ensure ingress is using the correct domain
             if [ -f "${manifestsPath}/10-ingress.yaml" ]; then
-                sed -i "s|host: .*|host: easyshop.letsdeployit.com|g" https://github.com/sananddev/tws-e-commerce-app/blob/master/kubernetes/10-ingress.yaml
+                sed -i "s|host: .*|host: easyshop.letsdeployit.com|g"  kubernetes/10-ingress.yaml
             fi
             
             # Check for changes
