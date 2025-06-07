@@ -8,7 +8,7 @@ def call(Map config = [:]) {
     def manifestsPath = config.manifestsPath ?: 'kubernetes'
     def gitCredentials = config.gitCredentials ?: 'github-credentials'
     def gitUserName = config.gitUserName ?: 'sananddev'
-    def gitUserEmail = config.gitUserEmail ?: 'jenkins@example.com'
+    def gitUserEmail = config.gitUserEmail ?: 'kinarapari@gmail.com'
     
     echo "Updating Kubernetes manifests with image tag: ${imageTag}"
     
