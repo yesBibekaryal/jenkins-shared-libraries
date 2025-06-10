@@ -7,8 +7,8 @@ def call(Map config = [:]) {
     def imageTag = config.imageTag ?: error("Image tag is required")
     def manifestsPath = config.manifestsPath ?: 'kubernetes'
     def gitCredentials = config.gitCredentials ?: 'github-credentials'
-    def gitUserName = config.gitUserName ?: 'sananddev'
-    def gitUserEmail = config.gitUserEmail ?: 'kinarapari@gmail.com'
+    def gitUserName = config.gitUserName ?: 'yesBibekaryal'
+    def gitUserEmail = config.gitUserEmail ?: 'yesbibekaryal@gmail.com'
     
     echo "Updating Kubernetes manifests with image tag: ${imageTag}"
     
@@ -19,18 +19,18 @@ def call(Map config = [:]) {
     )]) {
         // Configure Git
         sh """
-            git config user.name sananddev
-            git config user.email kinarapari@gmail.com
+            git config user.name yesBibekaryal
+            git config user.email yesbibekaryal@gmail.com
         """
         
         // Update deployment manifests with new image tags - using proper Linux sed syntax
         sh """
             # Update main application deployment - note the correct image name is trainwithshubham/easyshop-app
-            sed -i "s|image: sandyswosti/easyshop-app:.*|image: sandyswosti/easyshop-app:${imageTag}|g"  kubernetes/08-easyshop-deployment.yaml
+            sed -i "s|image: kubebibek/easyshop-app:.*|image: kubebibek/easyshop-app:${imageTag}|g"  kubernetes/08-easyshop-deployment.yaml
             
             # Update migration job if it exists
             if [ -f "${manifestsPath}/12-migration-job.yaml" ]; then
-                sed -i "s|image: sandyswosti/easyshop-migration:.*|image: sandyswosti/easyshop-migration:${imageTag}|g"   kubernetes/12-migration-job.yaml
+                sed -i "s|image: kubebibek/easyshop-migration:.*|image: kubebibek/easyshop-migration:${imageTag}|g"   kubernetes/12-migration-job.yaml
             fi
             
             # Ensure ingress is using the correct domain
@@ -47,7 +47,7 @@ def call(Map config = [:]) {
                 git commit -m "Update image tags to ${imageTag} and ensure correct domain [ci skip]"
                 
                 # Set up credentials for push
-                git remote set-url origin https://\${GIT_USERNAME}:\${GIT_PASSWORD}@github.com/sananddev/tws-e-commerce-app.git
+                git remote set-url origin https://\${GIT_USERNAME}:\${GIT_PASSWORD}@github.com/yesBibekaryal/tws-e-commerce-app.git
                 git push origin HEAD:\${GIT_BRANCH}
             fi
         """
